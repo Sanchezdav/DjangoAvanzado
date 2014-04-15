@@ -2,6 +2,29 @@
 
 {% block title %} Devask | Devcode.la{% endblock %}
 
+{% block profile %}
+	{% if user.is_authenticated %}
+		<ul class="nav navbar-nav navbar-right">
+			<li class="contenido-imagen-perfil">
+				<a href="#" class="padding-minus">
+					<img src="{{STATIC_URL}}img/jhonazsh.jpg" alt="foto-perfil" width="50px">
+				</a>
+			</li>
+
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username}} <b class="caret"></b></a>
+
+				<ul class="dropdown-menu">
+					<li><a href="#">Perfil</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Salir <span class="glyphicon glyphicon-log-out"></span></a></li>
+				</ul>					
+			</li>
+		</ul>
+	{% endif %}
+
+{% endblock %}
+
 {% block content %}
 <div class="container">
 		<div class="row cab">
@@ -17,8 +40,8 @@
 			<div class="col-md-4 login">
 				<h3>Conectate con:</h3>
 				<p>
-				  <button type="button" class="btn btn-primary btn-lg btn-lg-customize-fb"><span class="icon-facebook"></span>Facebook</button>
-				  <button type="button" class="btn btn-primary btn-lg btn-lg-customize-tw"><span class="icon-twitter"></span>Twitter</button>
+				  <a href='{% url "social:begin" "facebook" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-fb"><span class="icon-facebook"></span>Facebook</a>
+				  <a href='{% url "social:begin" "twitter" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-tw"><span class="icon-twitter"></span>Twitter</a>
 				</p>
 			</div>
 		</div>
