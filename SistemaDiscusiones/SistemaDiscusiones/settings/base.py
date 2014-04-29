@@ -16,6 +16,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'south',
     'social.apps.django_app.default',
+    'djrill',
 )
 
 LOCAL_APPS = (
@@ -59,7 +60,7 @@ AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
     )   
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/extra-data/'
 SOCIAL_AUTH_LOGIN_URL = '/error/'
 
 SOCIAL_AUTH_USER_MODEL = 'users.User'
@@ -78,3 +79,5 @@ SOCIAL_AUTH_PIPELINE = (
         'social.pipeline.user.user_details',
         'apps.users.pipelines.get_avatar',
     )
+
+EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'

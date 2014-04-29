@@ -7,7 +7,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<li class="contenido-imagen-perfil">
 				<a href="#" class="padding-minus">
-					<img src="{{STATIC_URL}}img/jhonazsh.jpg" alt="foto-perfil" width="50px">
+					<img src="{{ user.avatar }}" alt="foto-perfil" width="50px">
 				</a>
 			</li>
 
@@ -17,7 +17,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#">Perfil</a></li>
 					<li class="divider"></li>
-					<li><a href="#">Salir <span class="glyphicon glyphicon-log-out"></span></a></li>
+					<li><a href="{% url 'users:logout' %}">Salir <span class="glyphicon glyphicon-log-out"></span></a></li>
 				</ul>					
 			</li>
 		</ul>
@@ -37,13 +37,15 @@
   					</p>
 				</div>
 			</div>
-			<div class="col-md-4 login">
-				<h3>Conectate con:</h3>
-				<p>
-				  <a href='{% url "social:begin" "facebook" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-fb"><span class="icon-facebook"></span>Facebook</a>
-				  <a href='{% url "social:begin" "twitter" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-tw"><span class="icon-twitter"></span>Twitter</a>
-				</p>
-			</div>
+			
+				<div class="col-md-4 login">
+					<h3>Conectate con:</h3>
+					<p>
+				  	<a href='{% url "social:begin" "facebook" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-fb"><span class="icon-facebook"></span>Facebook</a>
+				  	<a href='{% url "social:begin" "twitter" %}' type="button" class="btn btn-primary btn-lg btn-lg-customize-tw"><span class="icon-twitter"></span>Twitter</a>
+					</p>
+				</div>
+		
 		</div>
 
 		<div class="row">
