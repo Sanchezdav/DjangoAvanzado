@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
-from django.views.generic import View
+from django.views.generic import View, DetailView
+from django.core.mail import EmailMessage
 
 from .forms import ExtraDataForm
+from .models import User
+from apps.discuss.models import Question
 
 class ExtraDataView(View):
 
@@ -19,6 +22,7 @@ class ExtraDataView(View):
 			request.user.email = request.POST['email']
 			request.user.status = True
 			request.user.save()
+			send_email(request) #Enviar email al guardar formulario
 			return redirect('/')
 		else:
 			error_username = form['username'].errors.as_text()
@@ -29,3 +33,42 @@ class ExtraDataView(View):
 def LogOut(request):
 	logout(request)
 	return redirect('/')
+
+
+# Envio de emails con Mandrill
+
+def send_email(request):
+
+	msg = EmailMessage(subject="Bienvenido",
+						from_email="David Sanchez <sanchez.dav90@gmail.com",
+						to=[request.user.email])
+
+	msg.template_name="welcome"
+	msg.template_content = {
+
+		'std_content00': '<h1>Hola %s Bienvenido a DevAsk</h1>' % request.user
+	}
+
+	msg.send()
+
+
+class UserDetailView(DetailView):
+
+	model = User
+	context_object_name = 'user'
+	slug_field = 'username'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserDetailView, self).get_context_data(**kwargs)
+		questions = Question.objects.filter(user = context['object']).order_by('created')
+		tags = [ question.tag.all() for question in questions]
+		context['ques_tags'] = zip(questions, tags)
+
+		facebook = context['object'].social_auth.filter(provider='facebook')
+		if facebook:
+			context['facebook'] = facebook[0].extra_data['id']
+
+		twitter = context['object'].social_auth.filter(provider='twitter')
+		if twitter:
+			context['twitter'] = twitter[0].extra_data['access_token']['screen_name']
+		return context
