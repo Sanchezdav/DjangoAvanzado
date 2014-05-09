@@ -4,3 +4,4 @@ South==0.8.4
 python-social-auth==0.1.23
 djrill==1.0.0
 psycopg2==2.5.2
+django-braces==1.4.0
