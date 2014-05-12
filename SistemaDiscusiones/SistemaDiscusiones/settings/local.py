@@ -27,3 +27,15 @@ SOCIAL_AUTH_TWITTER_KEY = 'HJmSIaoX60DBEo9KVa1m1vJ7x'
 SOCIAL_AUTH_TWITTER_SECRET = 'gb1f66q0hKK45UWUGY0hanlRt4DG82iE2myQGEZcgHyoxxWrLA'
 
 MANDRILL_API_KEY = 'VHK0CZY3VL57PUJMh_0rGw'
+
+CACHES = {
+	'default' : {
+		'BACKEND' : 'redis_cache.RedisCache',
+		#'LOCATION' : redistogo
+		'LOCATION' : 'localhost:6379',
+		'OPTIONS' : {
+			'DB' : 1,
+			#'PASSWORD' :
+		}
+	}
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView
 from django.core import serializers
 from django.http import HttpResponse, Http404
+from django.core.cache import cache
 
 from braces.views import LoginRequiredMixin
 
@@ -15,7 +16,8 @@ class QuestionListView(ListView):
 
 	def get_context_data(self, **kwargs):
 	    context = super(QuestionListView, self).get_context_data(**kwargs)
-	    context['tags'] = Tag.objects.all()
+	    tags = Tag.objects.all()
+	    context['tags'] = tags
 	    return context
 
 
